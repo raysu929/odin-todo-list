@@ -10,12 +10,24 @@ input.type = "text";
 input.placeholder = "Add Task";
 const addBtn = document.createElement("button");
 addBtn.innerText = "Add";
+
+const deleteBtn = document.createElement("button");
+deleteBtn.innerText = "Delete";
+
 addBtn.addEventListener("click", () => {
   const ul = document.createElement("ul");
   const li = document.createElement("li");
   li.innerText = input.value;
   input.value = "";
+
+  
+deleteBtn.addEventListener("click", () => {
+li.remove();
+ 
+});
  container.append(ul);
 ul.appendChild(li);
-})
+li.appendChild(deleteBtn);
+});
+
 container.append(input, addBtn);
