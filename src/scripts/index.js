@@ -13,6 +13,19 @@ const addBtn = document.createElement("button");
 addBtn.innerText = "Add";
 
 
+const addTask = document.createElement("button");
+addTask.innerText = "Add Task";
+addTask.addEventListener("click", () => {
+  if (container.style.display === "block") {
+    container.style.display = "none";
+    addTask.style.display = "block";
+  } else {
+    container.style.display = "block";
+    addTask.style.display = "none";
+  }
+});
+wrapper.append(addTask);
+
 addBtn.addEventListener("click", () => {
  const li = document.createElement("li");
   const check = document.createElement("input");
@@ -47,16 +60,9 @@ deleteBtn.addEventListener("click", () => {
 
  taskUl.appendChild(li);
  li.appendChild(deleteBtn);
- 
+ container.style.display = "none";
+ addTask.style.display = "block";
 });
 
-container.append(input, addBtn, taskUl);
-
-
-const addTask = document.createElement("button");
-addTask.innerText = "Add Task";
-addTask.addEventListener("click", () => {
-container.style.display = "block";
-
-})
-wrapper.append(addTask);
+container.append(input, addBtn);
+document.body.appendChild(taskUl);
