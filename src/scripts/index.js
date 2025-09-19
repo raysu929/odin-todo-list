@@ -5,29 +5,39 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const container = document.getElementById("container");
+const taskUl = document.getElementById("tasks");
 const input = document.createElement("input");
 input.type = "text";
 input.placeholder = "Add Task";
 const addBtn = document.createElement("button");
 addBtn.innerText = "Add";
 
-const deleteBtn = document.createElement("button");
-deleteBtn.innerText = "Delete";
 
 addBtn.addEventListener("click", () => {
-  const ul = document.createElement("ul");
   const li = document.createElement("li");
+  if(input.value.trim() === ""){
+    input.placeholder = "Oops, Try Again!";
+    addBtn.style.backgroundColor = "red";
+    addBtn.style.color = "white";
+    return;
+  }else{
+input.placeholder = "Add Task";
+addBtn.style.backgroundColor = "";
+addBtn.style.color = "";
+  }
   li.innerText = input.value;
-  input.value = "";
-
-  
+  const deleteBtn = document.createElement("button");
+  deleteBtn.innerText = "Delete";
 deleteBtn.addEventListener("click", () => {
-li.remove();
+  li.remove();
+});
+  input.value = "";
+ taskUl.appendChild(li);
+ li.appendChild(deleteBtn);
+
  
 });
- container.append(ul);
-ul.appendChild(li);
-li.appendChild(deleteBtn);
-});
 
-container.append(input, addBtn);
+container.append(input, addBtn, taskUl);
+
+
