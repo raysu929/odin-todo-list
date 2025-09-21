@@ -15,6 +15,8 @@ const description = document.createElement("textarea");
 description.placeholder = "Describe your task";
 const dueDate = document.createElement("input");
 dueDate.type = "date";
+const notes = document.createElement("textarea");
+notes.placeholder = "Notes..";
 const priority = document.createElement("select");
 
 const priorities = ["None","Low", "Medium", "High"];
@@ -24,10 +26,6 @@ priorities.forEach((level) => {
   option.text = level;
   priority.append(option);
 });
-
-const notes = document.createElement("textarea");
-notes.placeholder = "Notes..";
-
 
 input.addEventListener("input", () => {
   if (input.value.trim() === "") {
@@ -61,10 +59,21 @@ addTask.addEventListener("click", () => {
 wrapper.append(addTask);
 
 addBtn.addEventListener("click", () => {
-    function createTask(text) {
+    function createTask(text, des, due, note, priority) {
+
     let completed = false;
    const li = document.createElement("li");
-   li.innerText = text;
+    const p = document.createElement("p");
+    p.innerText = `Title: ${text}`;
+    const p1 = document.createElement("p");
+    p1.innerText = `Description: ${des}`;
+    const p2 = document.createElement("p");
+    p2.innerText = `Due: ${due}`;
+    const p3 = document.createElement("p");
+    p3.innerText = `Notes: ${note}`;
+    const p4 = document.createElement("p");
+    p4.innerText = `Priority: ${priority}`;
+    li.append(p, p1, p2, p3, p4);
    const check = document.createElement("input");
    check.type = "checkbox";
 
@@ -90,15 +99,28 @@ li.style.opacity = "1";
     li.appendChild(deleteBtn);
       return {
         text,
+        des,
+        due,
+        note,
+        priority,
         element: li,
         toggle,         
       };
     }
 
-    const task = createTask(input.value);
+    const task = createTask(
+      input.value,
+      description.value,
+      dueDate.value, notes.value,
+      priority.value
+    );
     taskUl.appendChild(task.element);
 
   input.value = "";
+  description.value = "";
+  notes.value = "";
+  dueDate.value = "";
+  priority.value = "None";
   addBtn.disabled = true;
   
   container.style.display = "none";
@@ -107,3 +129,4 @@ li.style.opacity = "1";
 
 container.append(title, input, description, dueDate, notes,priority, addBtn);
 document.body.appendChild(taskUl);
+
