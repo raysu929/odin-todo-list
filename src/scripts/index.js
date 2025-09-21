@@ -9,6 +9,25 @@ const taskUl = document.getElementById("tasks");
 const input = document.createElement("input");
 input.type = "text";
 input.placeholder = "Add Task";
+const title = document.createElement("h1");
+title.innerText = "Create a new task";
+const description = document.createElement("textarea");
+description.placeholder = "Describe your task";
+const dueDate = document.createElement("input");
+dueDate.type = "date";
+const priority = document.createElement("select");
+
+const priorities = ["None","Low", "Medium", "High"];
+priorities.forEach((level) => {
+  const option = document.createElement("option");
+  option.value = level.toLowerCase();
+  option.text = level;
+  priority.append(option);
+});
+
+const notes = document.createElement("textarea");
+notes.placeholder = "Notes..";
+
 
 input.addEventListener("input", () => {
   if (input.value.trim() === "") {
@@ -86,5 +105,5 @@ li.style.opacity = "1";
   addTask.style.display = "block";
 });
 
-container.append(input, addBtn);
+container.append(title, input, description, dueDate, notes,priority, addBtn);
 document.body.appendChild(taskUl);
