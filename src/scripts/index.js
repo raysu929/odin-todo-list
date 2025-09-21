@@ -9,9 +9,24 @@ const taskUl = document.getElementById("tasks");
 const input = document.createElement("input");
 input.type = "text";
 input.placeholder = "Add Task";
-const addBtn = document.createElement("button");
-addBtn.innerText = "Add";
 
+input.addEventListener("input", () => {
+  if (input.value.trim() === "") {
+    addBtn.disabled = true;
+    input.placeholder = "Oops, Try Again!";
+    addBtn.style.backgroundColor = "red";
+    addBtn.style.color = "white";
+  } else {
+    addBtn.disabled = false;
+    input.placeholder = "Add Task";
+    addBtn.style.backgroundColor = "";
+    addBtn.style.color = "";
+  }
+});
+
+const addBtn = document.createElement("button");
+addBtn.disabled = true;
+addBtn.innerText = "Add";
 
 const addTask = document.createElement("button");
 addTask.innerText = "Add Task";
@@ -27,41 +42,48 @@ addTask.addEventListener("click", () => {
 wrapper.append(addTask);
 
 addBtn.addEventListener("click", () => {
- const li = document.createElement("li");
-  const check = document.createElement("input");
-  check.type = "checkbox";
-  check.addEventListener("click", () => {
-    if(li.style.textDecoration === "line-through"){
-li.style.textDecoration = "none";
-li.style.opacity = "1";
-    }else{
+    function createTask(text) {
+    let completed = false;
+   const li = document.createElement("li");
+   li.innerText = text;
+   const check = document.createElement("input");
+   check.type = "checkbox";
+
+      function toggle(){
+ completed = !completed;
+          if(completed){
 li.style.textDecoration = "line-through";
 li.style.opacity = "0.7";
-    }
-  })
-  if(input.value.trim() === ""){
-    input.placeholder = "Oops, Try Again!";
-    addBtn.style.backgroundColor = "red";
-    addBtn.style.color = "white";
-    return;
-  }else{
-input.placeholder = "Add Task";
-addBtn.style.backgroundColor = "";
-addBtn.style.color = "";
-  }
-  li.innerText = input.value;
-  const deleteBtn = document.createElement("button");
-  deleteBtn.innerText = "Delete";
-deleteBtn.addEventListener("click", () => {
-  li.remove();
-});
-  input.value = "";
-  li.appendChild(check);
+          }else{
+li.style.textDecoration = "none";
+li.style.opacity = "1";
+          }  
+        }
+      
+   check.addEventListener("click", toggle);
 
- taskUl.appendChild(li);
- li.appendChild(deleteBtn);
- container.style.display = "none";
- addTask.style.display = "block";
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerText = "Delete";
+    deleteBtn.addEventListener("click", () => {
+      li.remove();
+    });
+    li.appendChild(check);
+    li.appendChild(deleteBtn);
+      return {
+        text,
+        element: li,
+        toggle,         
+      };
+    }
+
+    const task = createTask(input.value);
+    taskUl.appendChild(task.element);
+
+  input.value = "";
+  addBtn.disabled = true;
+  
+  container.style.display = "none";
+  addTask.style.display = "block";
 });
 
 container.append(input, addBtn);
