@@ -130,3 +130,41 @@ li.style.opacity = "1";
 container.append(title, input, description, dueDate, notes,priority, addBtn);
 document.body.appendChild(taskUl);
 
+
+const newProject = document.createElement("button");
+newProject.innerText = "New Project";
+
+let projectCount = 0;
+const maxProjects = 6;
+
+newProject.addEventListener("click", () => {
+  if(projectCount >= maxProjects) return;
+
+  const div = document.createElement("div");
+  div.style.width = "200px";
+const h2 = document.createElement("h2");
+h2.innerText = "Create new Project";
+const projInput = document.createElement("input");
+projInput.type = "text";
+projInput.placeholder = "Project Name";
+const submit = document.createElement("button");
+submit.innerText = "Submit";
+const cancel = document.createElement("button");
+cancel.innerText = "Cancel";
+
+
+submit.addEventListener("click", () => {
+    const projDiv = document.createElement("div");
+    projDiv.innerText = `Project Name: ${projInput.value}`;
+      document.body.append(projDiv);
+div.remove();
+projectCount++;
+});
+
+cancel.addEventListener("click", () => {
+ div.remove();
+});
+div.append(h2, projInput, submit, cancel);
+document.body.append(div);
+});
+document.body.appendChild(newProject);
