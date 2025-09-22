@@ -1,0 +1,53 @@
+.newProj, .submit, .cancel{
+  background-color: transparent;
+  padding:3px 0;
+  border-radius: 10px;
+  margin: 15px;
+  width: 200px;
+  cursor: pointer;
+}
+
+.newProj:hover,
+.submit:hover,
+.cancel:hover,
+.projInput:hover{
+  scale: 1.10;
+}
+
+.heading{
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  transition: background-color 0.15s, color 0.15s;
+  margin: 10px;
+}
+
+.heading:hover{
+  background-color: transparent;
+  color: black;
+}
+
+.projInput{
+  width: 250px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid rgb(204, 202, 202);
+  border-radius: 4px;
+  margin: 10px;
+}
+
+.submit,
+.cancel{
+  background-color: black;
+  color: white;
+  width: 150px;
+  margin: 5px;
+}
+
+.projDiv{
+  position: fixed;
+  top: 10px;
+  right: 0;
+}

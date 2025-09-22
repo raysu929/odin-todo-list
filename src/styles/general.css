@@ -10,6 +10,11 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
    font-family: "Roboto", sans-serif;
+   background-image: url("../pictures/background2.jpg");
+ background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
   }
 
 img, picture, video, canvas, svg {

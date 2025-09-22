@@ -1,5 +1,5 @@
 import "../styles/general.css";
-
+import "../styles/main.css";
 if (process.env.NODE_ENV !== "production") {
   console.log("Looks like we are in development mode!");
 }
@@ -8,17 +8,22 @@ const container = document.getElementById("container");
 
 const newProj = document.createElement("button");
 newProj.innerText = "New Project";
+newProj.classList.add("newProj");
 
 const projDiv = document.createElement("div");
+projDiv.classList.add("projDiv");
 const h2 = document.createElement("h2");
 h2.innerText = "Create New Project";
+h2.classList.add("heading");
 const projInput = document.createElement("input");
 projInput.placeholder = "New project name";
+projInput.classList.add("projInput");
 const submit = document.createElement("button");
 submit.innerText = "Submit";
+submit.classList.add("submit")
 const cancel = document.createElement("button");
 cancel.innerText = "Cancel";
-
+cancel.classList.add("cancel");
 newProj.addEventListener("click", () => {
   if (!document.body.contains(projDiv)) {
     projDiv.append(h2, projInput, submit, cancel);
