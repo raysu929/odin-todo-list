@@ -11,11 +11,11 @@
 .submit:hover,
 .cancel:hover,
 .projInput:hover,
-.addTask:hover{
+ .addTask:hover{
   scale: 1.10;
 }
 
-.heading{
+.heading, .taskHeading{
   background-color: black;
   color: white;
   text-align: center;
@@ -24,7 +24,7 @@
   margin: 10px;
 }
 
-.heading:hover{
+.heading:hover, .taskHeading:hover{
   background-color: transparent;
   color: black;
 }
@@ -40,29 +40,34 @@
 }
 
 .submit,
-.cancel,
-.addTask{
+.cancel{
   background-color: black;
-  border: 1px solid gray;
   color: white;
-  width: 150px;
+  width: 140px;
   margin: 5px;
 }
 
 .cancel{
-  background-color: red;
-  border:1px solid rgb(122, 27, 27);
+  background-image: url("../pictures/download2.jpeg");
+     background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+}
+.submit{
+     background-image: url("../pictures/green.webp");
+     background-size: cover;
+       background-position: center;
+         background-repeat: no-repeat;
+         border: none; 
 }
 
-.submit:hover{
-  background-color: green;
-}
 .addTask{
-  max-width: 130px;
-  max-height: 35px;
- 
+  max-width: 110px;
+  max-height: 30px;
 }
-.projDiv{
+.projDiv,
+.taskOverlay{
   position: fixed;
   top: 0;
   left: 0;
@@ -75,7 +80,7 @@
   z-index: 1000;
 }
 .popupBox {
-  background-color: white;
+   background-image: url("../pictures/white.webp");
   padding: 20px;
   border-radius: 10px;
   width: 400px;
@@ -90,19 +95,49 @@
   margin: 10px;
   border-right: 1px solid black;
     border-bottom: 1px solid black;
-        border-top: 1px solid black;
-
+  border-top: 1px solid black;
   width: 500px;
-
 }
 
-.taskDiv{
-  padding: 10px;
-  background-color: black;
-  border-radius: 5px;
-  width: 400px;
-  display: flex;
-  flex-direction: column;
+.popupBox input,
+.popupBox textarea,
+.popupBox select{
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.popupBox select{
+  cursor: pointer;
+}
+.option{
+ background-color: black;
+ color: white;
+ font-weight: 500;
+ font-size: 1rem;
+ text-align: center;
+}
+
+.todo{
+   background-image: url("../pictures/wall.png");
+  font-family:'Courier New', Courier, monospace;
+   background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  transition: background-color 0.15s, color 0.15s;
   margin: 10px;
 }
 
+.todo:hover{
+     background-image: url("../pictures/brick-wall.png");
+}
+
+.popupBox textarea{
+  max-width:100%;
+}

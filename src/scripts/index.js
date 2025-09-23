@@ -5,7 +5,9 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const container = document.getElementById("container");
-
+const h1 = document.createElement("h1");
+h1.innerText = "Todo List";
+h1.classList.add("todo");
 const newProj = document.createElement("button");
 newProj.innerText = "New Project";
 newProj.classList.add("newProj");
@@ -57,8 +59,13 @@ submit.addEventListener("click", () => {
   addTask.innerText = "Add task";
 addTask.classList.add("addTask");
   addTask.addEventListener("click", () => {
-    const taskDiv = document.createElement("div");
-taskDiv.classList.add("taskDiv");
+    const taskOverlay = document.createElement("div");
+    taskOverlay.classList.add("taskOverlay");
+    const taskForm = document.createElement("div");
+    taskForm.classList.add("popupBox"); 
+   const heading = document.createElement("h1");
+   heading.innerText = "Create A Task";
+   heading.classList.add("taskHeading");
     const taskTitle = document.createElement("input");
     taskTitle.placeholder = "Add Task";
 
@@ -72,6 +79,7 @@ taskDiv.classList.add("taskDiv");
     const priorities = ["None", "Low", "Medium", "High"];
     priorities.forEach((level) => {
       const option = document.createElement("option");
+      option.classList.add("option")
       option.value = level.toLowerCase();
       option.text = level;
       priority.append(option);
@@ -82,10 +90,19 @@ taskDiv.classList.add("taskDiv");
 
     const addButton = document.createElement("button");
     addButton.innerText = "Submit";
+addButton.classList.add("submit");
+    const cancelButton = document.createElement("button");
+    cancelButton.innerText = "Cancel";
+    cancelButton.classList.add("cancel");
+
+    cancelButton.addEventListener("click", () => {
+      taskOverlay.remove();
+    });
 
     addButton.addEventListener("click", () => {
       const task = createTask(
-        taskTitle.value,
+        heading.value,
+        `Task title: ${taskTitle.value}`,
         des.value,
         dueDate.value,
         notes.value,
@@ -93,11 +110,12 @@ taskDiv.classList.add("taskDiv");
       );
 
       taskList.appendChild(task.element);
-      taskDiv.remove();
+      taskOverlay.remove();
     });
 
-    taskDiv.append(taskTitle, des, dueDate, priority, notes, addButton);
-    document.body.appendChild(taskDiv);
+    taskForm.append(heading, taskTitle, des, dueDate, priority, notes, addButton, cancelButton);
+taskOverlay.append(taskForm);
+document.body.appendChild(taskOverlay);
   });
 
   projContainer.append(addTask);
@@ -106,7 +124,7 @@ taskDiv.classList.add("taskDiv");
   projDiv.remove();
 });
 
-container.append(newProj);
+container.append(h1, newProj);
 
 function createTask(text, des, due, note, priority) {
   let completed = false;
@@ -140,6 +158,7 @@ function createTask(text, des, due, note, priority) {
 
   const deleteBtn = document.createElement("button");
   deleteBtn.innerText = "Delete";
+  deleteBtn.classList.add("delete");
   deleteBtn.addEventListener("click", () => {
     li.remove();
   });
