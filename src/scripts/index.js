@@ -12,6 +12,8 @@ newProj.classList.add("newProj");
 
 const projDiv = document.createElement("div");
 projDiv.classList.add("projDiv");
+const popupBox = document.createElement("div");
+popupBox.classList.add("popupBox");
 const h2 = document.createElement("h2");
 h2.innerText = "Create New Project";
 h2.classList.add("heading");
@@ -24,9 +26,15 @@ submit.classList.add("submit")
 const cancel = document.createElement("button");
 cancel.innerText = "Cancel";
 cancel.classList.add("cancel");
+cancel.addEventListener("click", () => {
+  projDiv.remove();
+});
+
+popupBox.append(h2, projInput, submit, cancel);
+projDiv.append(popupBox);
+
 newProj.addEventListener("click", () => {
   if (!document.body.contains(projDiv)) {
-    projDiv.append(h2, projInput, submit, cancel);
     document.body.append(projDiv);
   }
 });
@@ -37,6 +45,7 @@ submit.addEventListener("click", () => {
   projInput.value = "";
 
   const projContainer = document.createElement("div");
+  projContainer.classList.add("projContainer");
   const projectTitle = document.createElement("h2");
   projectTitle.innerText = projectName;
   projContainer.appendChild(projectTitle);
@@ -46,10 +55,10 @@ submit.addEventListener("click", () => {
 
   const addTask = document.createElement("button");
   addTask.innerText = "Add task";
-
+addTask.classList.add("addTask");
   addTask.addEventListener("click", () => {
     const taskDiv = document.createElement("div");
-
+taskDiv.classList.add("taskDiv");
     const taskTitle = document.createElement("input");
     taskTitle.placeholder = "Add Task";
 
@@ -88,7 +97,7 @@ submit.addEventListener("click", () => {
     });
 
     taskDiv.append(taskTitle, des, dueDate, priority, notes, addButton);
-    projContainer.appendChild(taskDiv);
+    document.body.appendChild(taskDiv);
   });
 
   projContainer.append(addTask);
