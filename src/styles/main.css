@@ -12,7 +12,7 @@
 .cancel:hover,
 .projInput:hover,
  .addTask:hover{
-  scale: 1.10;
+  scale: 1.05;
 }
 
 .heading, .taskHeading{

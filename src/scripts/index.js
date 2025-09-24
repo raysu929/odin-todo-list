@@ -62,9 +62,14 @@ function createProject(projectName) {
 
   const taskList = document.createElement("ul");
   projContainer.appendChild(taskList);
-
+const deleteTask = document.createElement("button");
+deleteTask.innerText = "🗑️";
+deleteTask.classList.add("delete");
+deleteTask.addEventListener("click", () => {
+projContainer.remove();
+});
   const addTask = document.createElement("button");
-  addTask.innerText = "Add task";
+addTask.innerText = "Add Task";
 addTask.classList.add("addTask");
   addTask.addEventListener("click", () => {
     const taskOverlay = document.createElement("div");
@@ -135,6 +140,7 @@ taskOverlay.append(taskForm);
 document.body.appendChild(taskOverlay);
   });
   projectTitle.append(addTask);
+    projectTitle.append(deleteTask);
   projectGrid.appendChild(projContainer);
   projDiv.remove();
 }
