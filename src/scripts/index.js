@@ -91,6 +91,15 @@ addTask.classList.add("addTask");
       option.value = level.toLowerCase();
       option.text = level;
       priority.append(option);
+      if (level === "Low") {
+        option.style.color = "yellow";
+      }else if(level === "Medium"){
+        option.style.color = "orange";
+      }else if(level === "High"){
+        option.style.color = "red";
+      }else{
+        option.style.color = "lightblue";
+      }
     });
 
     const notes = document.createElement("textarea");
@@ -117,6 +126,7 @@ addButton.classList.add("submit");
       );
 
       taskList.appendChild(task.element);
+      task.element.classList.add(`priority-${priority.value}`);
       taskOverlay.remove();
     });
 
@@ -146,9 +156,11 @@ function createTask(text, des, due, note, priority) {
   p3.innerText = `Notes: ${note}`;
   const p4 = document.createElement("p");
   p4.innerText = `Priority: ${priority}`;
+  p4.classList.add("p4");
   li.append(p, p1, p2, p3, p4);
   const check = document.createElement("input");
   check.type = "checkbox";
+check.classList.add("check");
 
   function toggle() {
     completed = !completed;
@@ -164,13 +176,13 @@ function createTask(text, des, due, note, priority) {
   check.addEventListener("click", toggle);
 
   const deleteBtn = document.createElement("button");
-  deleteBtn.innerText = "Delete";
+deleteBtn.innerText = "🗑️";
   deleteBtn.classList.add("delete");
   deleteBtn.addEventListener("click", () => {
     li.remove();
   });
-  li.appendChild(check);
-  li.appendChild(deleteBtn);
+  p.appendChild(check);
+  p.appendChild(deleteBtn);
 
   return {
     text,
