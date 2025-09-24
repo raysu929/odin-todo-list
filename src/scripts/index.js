@@ -41,15 +41,23 @@ newProj.addEventListener("click", () => {
   }
 });
 
+const projectGrid = document.createElement("div");
+projectGrid.classList.add("projectGrid");
+document.body.appendChild(projectGrid);
+
 submit.addEventListener("click", () => {
   const projectName = projInput.value.trim();
   if (!projectName) return; 
   projInput.value = "";
+  createProject(projectName);
+});
 
+function createProject(projectName) {
   const projContainer = document.createElement("div");
   projContainer.classList.add("projContainer");
-  const projectTitle = document.createElement("h2");
+  const projectTitle = document.createElement("div");
   projectTitle.innerText = projectName;
+  projectTitle.classList.add("title")
   projContainer.appendChild(projectTitle);
 
   const taskList = document.createElement("ul");
@@ -101,11 +109,10 @@ addButton.classList.add("submit");
 
     addButton.addEventListener("click", () => {
       const task = createTask(
-        heading.value,
-        `Task title: ${taskTitle.value}`,
-        des.value,
+        taskTitle.value.trim(),
+        des.value.trim(),
         dueDate.value,
-        notes.value,
+        notes.value.trim(),
         priority.value
       );
 
@@ -113,26 +120,26 @@ addButton.classList.add("submit");
       taskOverlay.remove();
     });
 
-    taskForm.append(heading, taskTitle, des, dueDate, priority, notes, addButton, cancelButton);
+    taskForm.append( heading, taskTitle, des, dueDate, priority, notes, addButton, cancelButton);
 taskOverlay.append(taskForm);
 document.body.appendChild(taskOverlay);
   });
-
-  projContainer.append(addTask);
-  document.body.append(projContainer);
-
+  projectTitle.append(addTask);
+  projectGrid.appendChild(projContainer);
   projDiv.remove();
-});
+}
 
 container.append(h1, newProj);
 
 function createTask(text, des, due, note, priority) {
   let completed = false;
   const li = document.createElement("li");
+  li.classList.add("li");
   const p = document.createElement("p");
-  p.innerText = `Title: ${text}`;
+  p.innerText = ` ${text}`;
+  p.classList.add("para");
   const p1 = document.createElement("p");
-  p1.innerText = `Description: ${des}`;
+  p1.innerText = ` ${des}`;
   const p2 = document.createElement("p");
   p2.innerText = `Due: ${due}`;
   const p3 = document.createElement("p");
