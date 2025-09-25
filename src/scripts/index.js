@@ -1,9 +1,13 @@
+import { sidebar, updateSidebar } from "./sidebar.js";
+import "./sidebar.js";
 import "../styles/general.css";
 import "../styles/main.css";
+import "../styles/sidebar.css";
+
 if (process.env.NODE_ENV !== "production") {
   console.log("Looks like we are in development mode!");
 }
-
+document.body.appendChild(sidebar);
 const container = document.getElementById("container");
 const h1 = document.createElement("h1");
 h1.innerText = "Todo List";
@@ -24,7 +28,7 @@ projInput.placeholder = "New project name";
 projInput.classList.add("projInput");
 const submit = document.createElement("button");
 submit.innerText = "Submit";
-submit.classList.add("submit")
+submit.classList.add("submit");
 const cancel = document.createElement("button");
 cancel.innerText = "Cancel";
 cancel.classList.add("cancel");
@@ -47,9 +51,10 @@ document.body.appendChild(projectGrid);
 
 submit.addEventListener("click", () => {
   const projectName = projInput.value.trim();
-  if (!projectName) return; 
+  if (!projectName) return;
   projInput.value = "";
   createProject(projectName);
+  updateSidebar(projectName);
 });
 
 function createProject(projectName) {
@@ -57,28 +62,28 @@ function createProject(projectName) {
   projContainer.classList.add("projContainer");
   const projectTitle = document.createElement("div");
   projectTitle.innerText = projectName;
-  projectTitle.classList.add("title")
+  projectTitle.classList.add("title");
   projContainer.appendChild(projectTitle);
 
   const taskList = document.createElement("ul");
   projContainer.appendChild(taskList);
-const deleteTask = document.createElement("button");
-deleteTask.innerText = "🗑️";
-deleteTask.classList.add("delete");
-deleteTask.addEventListener("click", () => {
-projContainer.remove();
-});
+  const deleteTask = document.createElement("button");
+  deleteTask.innerText = "🗑️";
+  deleteTask.classList.add("delete");
+  deleteTask.addEventListener("click", () => {
+    projContainer.remove();
+  });
   const addTask = document.createElement("button");
-addTask.innerText = "Add Task";
-addTask.classList.add("addTask");
+  addTask.innerText = "Add Task";
+  addTask.classList.add("addTask");
   addTask.addEventListener("click", () => {
     const taskOverlay = document.createElement("div");
     taskOverlay.classList.add("taskOverlay");
     const taskForm = document.createElement("div");
-    taskForm.classList.add("popupBox"); 
-   const heading = document.createElement("h1");
-   heading.innerText = "Create A Task";
-   heading.classList.add("taskHeading");
+    taskForm.classList.add("popupBox");
+    const heading = document.createElement("h1");
+    heading.innerText = "Create A Task";
+    heading.classList.add("taskHeading");
     const taskTitle = document.createElement("input");
     taskTitle.placeholder = "Add Task";
 
@@ -92,17 +97,17 @@ addTask.classList.add("addTask");
     const priorities = ["None", "Low", "Medium", "High"];
     priorities.forEach((level) => {
       const option = document.createElement("option");
-      option.classList.add("option")
+      option.classList.add("option");
       option.value = level.toLowerCase();
       option.text = level;
       priority.append(option);
       if (level === "Low") {
         option.style.color = "yellow";
-      }else if(level === "Medium"){
+      } else if (level === "Medium") {
         option.style.color = "orange";
-      }else if(level === "High"){
+      } else if (level === "High") {
         option.style.color = "red";
-      }else{
+      } else {
         option.style.color = "lightblue";
       }
     });
@@ -112,7 +117,7 @@ addTask.classList.add("addTask");
 
     const addButton = document.createElement("button");
     addButton.innerText = "Submit";
-addButton.classList.add("submit");
+    addButton.classList.add("submit");
     const cancelButton = document.createElement("button");
     cancelButton.innerText = "Cancel";
     cancelButton.classList.add("cancel");
@@ -135,12 +140,21 @@ addButton.classList.add("submit");
       taskOverlay.remove();
     });
 
-    taskForm.append( heading, taskTitle, des, dueDate, priority, notes, addButton, cancelButton);
-taskOverlay.append(taskForm);
-document.body.appendChild(taskOverlay);
+    taskForm.append(
+      heading,
+      taskTitle,
+      des,
+      dueDate,
+      priority,
+      notes,
+      addButton,
+      cancelButton
+    );
+    taskOverlay.append(taskForm);
+    document.body.appendChild(taskOverlay);
   });
   projectTitle.append(addTask);
-    projectTitle.append(deleteTask);
+  projectTitle.append(deleteTask);
   projectGrid.appendChild(projContainer);
   projDiv.remove();
 }
@@ -166,7 +180,7 @@ function createTask(text, des, due, note, priority) {
   li.append(p, p1, p2, p3, p4);
   const check = document.createElement("input");
   check.type = "checkbox";
-check.classList.add("check");
+  check.classList.add("check");
 
   function toggle() {
     completed = !completed;
@@ -182,7 +196,7 @@ check.classList.add("check");
   check.addEventListener("click", toggle);
 
   const deleteBtn = document.createElement("button");
-deleteBtn.innerText = "🗑️";
+  deleteBtn.innerText = "🗑️";
   deleteBtn.classList.add("delete");
   deleteBtn.addEventListener("click", () => {
     li.remove();

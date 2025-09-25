@@ -15,6 +15,10 @@
   scale: 1.05;
 }
 
+.newProj{
+    margin-left: 300px;
+}
+
 .heading, .taskHeading{
   background-color: black;
   color: white;
@@ -140,6 +144,8 @@
   border-radius: 10px;
   transition: background-color 0.15s, color 0.15s;
   margin: 10px;
+    margin-left: 300px;
+
 }
 
 .todo:hover{
@@ -156,6 +162,7 @@
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 20px;
   padding: 20px;
+  margin-left: 300px;
 }
 
 

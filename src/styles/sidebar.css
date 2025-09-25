@@ -1,0 +1,21 @@
+.sidebar{
+  position: fixed;
+   background-image: url("../pictures/wall.png");
+  border-top-right-radius: 10px;
+  width: 300px;
+  height: 100vh;
+  top: 0;
+  padding: 10px;
+}
+
+.projPara{
+    border-bottom: 2px solid rgb(74, 71, 71);
+    padding: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.headingProj{
+    text-align: center;
+      font-family: 'Courier New', Courier, monospace;
+}
