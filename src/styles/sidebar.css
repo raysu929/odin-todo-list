@@ -1,6 +1,6 @@
 .sidebar{
   position: fixed;
-   background-image: url("../pictures/wall.png");
+   background-image: url("../pictures/white.webp");
   border-top-right-radius: 10px;
   width: 300px;
   height: 100vh;
@@ -9,13 +9,14 @@
 }
 
 .projPara{
-    border-bottom: 2px solid rgb(74, 71, 71);
-    padding: 20px;
+    padding: 15px;
     font-weight: bold;
     font-size: 1.2rem;
 }
 
 .headingProj{
+      border-bottom: 1px solid rgb(208, 203, 203);
+      padding: 10px;
     text-align: center;
       font-family: 'Courier New', Courier, monospace;
 }

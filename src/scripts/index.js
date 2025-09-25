@@ -1,5 +1,4 @@
 import { sidebar, updateSidebar } from "./sidebar.js";
-import "./sidebar.js";
 import "../styles/general.css";
 import "../styles/main.css";
 import "../styles/sidebar.css";
@@ -53,8 +52,7 @@ submit.addEventListener("click", () => {
   const projectName = projInput.value.trim();
   if (!projectName) return;
   projInput.value = "";
-  createProject(projectName);
-  updateSidebar(projectName);
+    createProject(projectName);
 });
 
 function createProject(projectName) {
@@ -157,8 +155,8 @@ function createProject(projectName) {
   projectTitle.append(deleteTask);
   projectGrid.appendChild(projContainer);
   projDiv.remove();
+   updateSidebar(projectName, projContainer);
 }
-
 container.append(h1, newProj);
 
 function createTask(text, des, due, note, priority) {
