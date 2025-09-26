@@ -180,6 +180,12 @@ function createTask(text, des, due, note, priority) {
   const check = document.createElement("input");
   check.type = "checkbox";
   check.classList.add("check");
+const editTask = document.createElement("button");
+editTask.innerText = "✏️";
+editTask.classList.add("edit");
+ const deleteBtn = document.createElement("button");
+ deleteBtn.innerText = "🗑️";
+ deleteBtn.classList.add("delete");
 
   function toggle() {
     completed = !completed;
@@ -193,15 +199,103 @@ function createTask(text, des, due, note, priority) {
   }
 
   check.addEventListener("click", toggle);
+ deleteBtn.addEventListener("click", () => {
+   li.remove();
+ });
 
-  const deleteBtn = document.createElement("button");
-  deleteBtn.innerText = "🗑️";
-  deleteBtn.classList.add("delete");
-  deleteBtn.addEventListener("click", () => {
-    li.remove();
+editTask.addEventListener("click", () => {
+  const overlay = document.createElement("div");
+  overlay.classList.add("taskOverlay");
+
+  const popup = document.createElement("div");
+  popup.classList.add("popupBox");
+
+  const heading = document.createElement("h2");
+  heading.innerText = "Edit Task";
+ const inputTitle = document.createElement("input");
+ inputTitle.type = "text";
+ inputTitle.value = text;
+
+ const inputDesc = document.createElement("textarea");
+ inputDesc.value = des;
+
+ const inputDate = document.createElement("input");
+ inputDate.type = "date";
+ inputDate.value = due;
+
+ const inputNote = document.createElement("textarea");
+ inputNote.value = note;
+
+ const inputPriority = document.createElement("select");
+ const priorities = ["None", "Low", "Medium", "High"];
+ priorities.forEach((level) => {
+   const option = document.createElement("option");
+   option.value = level.toLowerCase();
+   option.text = level;
+   inputPriority.append(option);
+ });
+ inputPriority.value = priority;
+
+  const saveBtn = document.createElement("button");
+  saveBtn.innerText = "Save";
+saveBtn.classList.add("submit")
+  const cancelBtn = document.createElement("button");
+  cancelBtn.innerText = "Cancel";
+cancelBtn.classList.add("cancel");
+  cancelBtn.addEventListener("click", () => {
+    overlay.remove();
   });
-  p.appendChild(check);
-  p.appendChild(deleteBtn);
+
+  saveBtn.addEventListener("click", () => {
+    const newTitle = inputTitle.value.trim();
+    const newDesc = inputDesc.value.trim();
+    const newDue = inputDate.value;
+    const newNote = inputNote.value.trim();
+    const newPriority = inputPriority.value;
+
+    if (newTitle) {
+      text = newTitle;
+      des = newDesc;
+      due = newDue;
+      note = newNote;
+      priority = newPriority;
+
+      p.innerText = ` ${text}`;
+      p1.innerText = ` ${des}`;
+      p2.innerText = `Due: ${due}`;
+      p3.innerText = `Notes: ${note}`;
+      p4.innerText = `Priority: ${priority}`;
+
+      p.append(check, editTask, deleteBtn);
+
+      li.classList.remove(
+        "priority-none",
+        "priority-low",
+        "priority-medium",
+        "priority-high"
+      );
+      li.classList.add(`priority-${priority}`);
+    }
+
+    overlay.remove();
+  });
+
+ popup.append(
+   heading,
+   inputTitle,
+   inputDesc,
+   inputDate,
+   inputNote,
+   inputPriority,
+   saveBtn,
+   cancelBtn
+ );
+   overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+});
+
+  p.append(check, editTask, deleteBtn);
+li.append(p, p1, p2, p3, p4);
 
   return {
     text,
