@@ -59,10 +59,12 @@ function createProject(projectName) {
   const projContainer = document.createElement("div");
   projContainer.classList.add("projContainer");
   const projectTitle = document.createElement("div");
-  projectTitle.innerText = projectName;
   projectTitle.classList.add("title");
   projContainer.appendChild(projectTitle);
 
+  const titleText = document.createElement("span");
+  titleText.classList.add("project-name"); 
+  titleText.innerText = projectName;
   const taskList = document.createElement("ul");
   projContainer.appendChild(taskList);
   const deleteTask = document.createElement("button");
@@ -151,11 +153,10 @@ function createProject(projectName) {
     taskOverlay.append(taskForm);
     document.body.appendChild(taskOverlay);
   });
-  projectTitle.append(addTask);
-  projectTitle.append(deleteTask);
+  projectTitle.append(titleText,addTask,deleteTask);
   projectGrid.appendChild(projContainer);
   projDiv.remove();
-   updateSidebar(projectName, projContainer);
+   updateSidebar(projectName, projContainer, projectTitle);
 }
 container.append(h1, newProj);
 

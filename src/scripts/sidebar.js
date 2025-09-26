@@ -5,7 +5,7 @@ headingProj.innerText = "All Projects";
 headingProj.classList.add("headingProj");
 sidebar.appendChild(headingProj);
 
-export function updateSidebar(projectName, projectContainerElement) {
+export function updateSidebar(projectName, projectContainerElement, projectTitleElement) {
   const entry = document.createElement("div");
   entry.classList.add("sidebarEntry");
 
@@ -47,7 +47,7 @@ entry.appendChild(projPara);
     cancel.innerText = "Cancel";
     cancel.classList.add("cancel");
     const submit = document.createElement("button");
-    submit.innerText = "Submit";
+    submit.innerText = "Save";
     submit.classList.add("submit");
     div.append(editProj, input, submit, cancel);
     document.body.appendChild(div);
@@ -62,6 +62,12 @@ entry.appendChild(projPara);
       const newName = input.value.trim();
       if (newName) {
         projPara.innerText = newName;
+        if (projectTitleElement){
+const titleTextNode = projectTitleElement.querySelector(".project-name");
+if (titleTextNode) {
+  titleTextNode.textContent = newName;
+}        
+}
       }
       overlay.remove();
     });
