@@ -19,4 +19,28 @@
       padding: 10px;
     text-align: center;
       font-family: 'Courier New', Courier, monospace;
+      margin-bottom: 10px;
+}
+
+.sidebarEntry{
+  display: grid;
+grid-template-columns: 200px 40px 10px;
+  font-size: 1.3rem;
+}
+
+.sidebar-delete{
+  border: none;
+   cursor: pointer;
+   background-color: transparent;
+}
+
+.sidebarEntry:hover{
+  background-color: #ddd;
+  border-radius: 10px;
+}
+
+.edit{
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
