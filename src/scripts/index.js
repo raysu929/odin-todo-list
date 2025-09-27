@@ -1,5 +1,10 @@
-import { sidebar } from "./sidebar.js";
-import { createProject } from "./main.js";
+import { updateSidebar, sidebar } from "./sidebar.js";
+import {
+  initializeProjects,
+  projects,
+  renderProject,
+  createNewProject,
+} from "./main.js";
 import "../styles/general.css";
 import "../styles/main.css";
 import "../styles/sidebar.css";
@@ -49,10 +54,20 @@ newProj.addEventListener("click", () => {
 const projectGrid = document.createElement("div");
 projectGrid.classList.add("projectGrid");
 document.body.appendChild(projectGrid);
+initializeProjects();
 
 submit.addEventListener("click", () => {
   const projectName = projInput.value.trim();
   if (!projectName) return;
   projInput.value = "";
-createProject(projectName, projectGrid, projDiv);
+  
+const newProject = createNewProject(projectName);
+projects.push(newProject);
+
+const projElem = renderProject(newProject);
+projectGrid.appendChild(projElem);
+
+updateSidebar(projectName, projElem, projElem.querySelector(".title"), newProject);
+
+projDiv.remove();
 });

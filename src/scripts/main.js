@@ -1,23 +1,51 @@
 import { updateSidebar } from "./sidebar.js";
+import { createNewProject } from "./project.js";
+import { createTodo } from "./todo.js";
 
-function createProject(projectName, projectGrid, projDiv) {
+const projects = [];
+
+const newProject = createNewProject("Default");
+projects.push(newProject);
+
+const todo1 = createTodo(
+  "Buy Milk",
+  "Get 2 liters of milk",
+  "2025-10-01",
+  "High"
+);
+newProject.addTodo(todo1);
+console.log(projects);
+
+function renderProject(project) {
   const projContainer = document.createElement("div");
   projContainer.classList.add("projContainer");
-  const projectTitle = document.createElement("div");
-  projectTitle.classList.add("title");
+const projectTitle = document.createElement("div");
+projectTitle.classList.add("title");
+
+const titleText = document.createElement("span");
+titleText.classList.add("project-name");
+titleText.textContent = project.name;
+
+projectTitle.appendChild(titleText);
+
   projContainer.appendChild(projectTitle);
 
-  const titleText = document.createElement("span");
-  titleText.classList.add("project-name");
-  titleText.innerText = projectName;
-  const taskList = document.createElement("ul");
-  projContainer.appendChild(taskList);
-  const deleteTask = document.createElement("button");
-  deleteTask.innerText = "🗑️";
-  deleteTask.classList.add("delete");
-  deleteTask.addEventListener("click", () => {
-    projContainer.remove();
-  });
+const taskList = document.createElement("ul");
+project.todos.forEach((todo) => {
+  const taskItem = document.createElement("li");
+  taskItem.textContent = `${todo.title} - Due: ${todo.dueDate}`;
+  taskItem.classList.add(`priority-${todo.priority.toLowerCase()}`);
+  taskList.appendChild(taskItem);
+});
+
+projContainer.appendChild(taskList);
+const deleteTask = document.createElement("button");
+deleteTask.innerText = "🗑️";
+deleteTask.classList.add("delete");
+deleteTask.addEventListener("click", () => {
+  projContainer.remove();
+});
+
   const addTask = document.createElement("button");
   addTask.innerText = "Add Task";
   addTask.classList.add("addTask");
@@ -98,6 +126,34 @@ function createProject(projectName, projectGrid, projDiv) {
     taskOverlay.append(taskForm);
     document.body.appendChild(taskOverlay);
   });
+  projectTitle.appendChild(addTask);
+  projectTitle.appendChild(deleteTask);
+  return projContainer;
+}
+function initializeProjects() {
+  const projectGrid = document.querySelector(".projectGrid");
+  projects.forEach((project) => {
+    const projElem = renderProject(project);
+    projectGrid.appendChild(projElem);
+    updateSidebar(newProject.name, projElem, projElem.querySelector(".title"));
+  });
+}
+
+export { initializeProjects, projects, renderProject, createNewProject };
+
+function createProject(projectName, projectGrid, projDiv) {
+  const projContainer = document.createElement("div");
+  projContainer.classList.add("projContainer");
+  const projectTitle = document.createElement("div");
+  projectTitle.classList.add("title");
+  projContainer.appendChild(projectTitle);
+
+  const titleText = document.createElement("span");
+  titleText.classList.add("project-name");
+  titleText.innerText = projectName;
+  const taskList = document.createElement("ul");
+  projContainer.appendChild(taskList);
+  
   projectTitle.append(titleText, addTask, deleteTask);
   projectGrid.appendChild(projContainer);
   projDiv.remove();
@@ -251,4 +307,3 @@ function createTask(text, des, due, note, priority) {
     toggle,
   };
 }
-export { createProject, createTask };

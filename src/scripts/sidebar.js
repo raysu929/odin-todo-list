@@ -5,7 +5,7 @@ headingProj.innerText = "All Projects";
 headingProj.classList.add("headingProj");
 sidebar.appendChild(headingProj);
 
-export function updateSidebar(projectName, projectContainerElement, projectTitleElement) {
+export function updateSidebar(projectName, projectContainerElement, projectTitleElement, projectObj) {
   const entry = document.createElement("div");
   entry.classList.add("sidebarEntry");
 
@@ -67,6 +67,9 @@ const titleTextNode = projectTitleElement.querySelector(".project-name");
 if (titleTextNode) {
   titleTextNode.textContent = newName;
 }        
+}
+if (projectObj){
+  projectObj.name = newName;
 }
       }
       overlay.remove();
