@@ -3,18 +3,22 @@ import { createNewProject } from "./project.js";
 import { createTodo } from "./todo.js";
 
 const projects = [];
+loadFromLocalStorage();
 
-const newProject = createNewProject("Default");
-projects.push(newProject);
+if (projects.length === 0) {
+  const newProject = createNewProject("Default");
+  const todo1 = createTodo(
+    "Buy Milk",
+    "Get 2 liters of milk",
+    "2025-10-01",
+    "Dont forget",
+    "High"
+  );
+  newProject.addTodo(todo1);
+  projects.push(newProject);
+  saveToLocalStorage(); 
+}
 
-const todo1 = createTodo(
-  "Buy Milk",
-  "Get 2 liters of milk",
-  "2025-10-01",
-  "High"
-);
-newProject.addTodo(todo1);
-console.log(projects);
 
 function renderProject(project) {
   const projContainer = document.createElement("div");
@@ -32,11 +36,22 @@ projectTitle.appendChild(titleText);
 
 const taskList = document.createElement("ul");
 project.todos.forEach((todo) => {
-  const taskItem = document.createElement("li");
-  taskItem.textContent = `${todo.title} - Due: ${todo.dueDate}`;
-  taskItem.classList.add(`priority-${todo.priority.toLowerCase()}`);
-  taskList.appendChild(taskItem);
+  const task = createTask(
+    todo.title,
+    todo.description,
+    todo.dueDate,
+    todo.notes,
+    todo.priority
+  );
+
+  if (todo.completed) {
+    task.toggle(); 
+    task.element.querySelector("input[type='checkbox']").checked = true;
+  }
+
+  taskList.appendChild(task.element);
 });
+
 
 projContainer.appendChild(taskList);
 const deleteTask = document.createElement("button");
@@ -44,6 +59,12 @@ deleteTask.innerText = "🗑️";
 deleteTask.classList.add("delete");
 deleteTask.addEventListener("click", () => {
   projContainer.remove();
+
+  const index = projects.findIndex((p) => p.name === project.name);
+  if (index !== -1){
+    projects.splice(index, 1);
+  }
+  saveToLocalStorage();
 });
 
   const addTask = document.createElement("button");
@@ -110,6 +131,17 @@ deleteTask.addEventListener("click", () => {
 
       taskList.appendChild(task.element);
       task.element.classList.add(`priority-${priority.value}`);
+
+      project.addTodo(
+        createTodo(
+          taskTitle.value.trim(),
+          des.value.trim(),
+          dueDate.value,
+          notes.value.trim(),
+          priority.value
+        )
+      );
+      saveToLocalStorage();
       taskOverlay.remove();
     });
 
@@ -118,8 +150,8 @@ deleteTask.addEventListener("click", () => {
       taskTitle,
       des,
       dueDate,
-      priority,
       notes,
+      priority,
       addButton,
       cancelButton
     );
@@ -135,11 +167,11 @@ function initializeProjects() {
   projects.forEach((project) => {
     const projElem = renderProject(project);
     projectGrid.appendChild(projElem);
-    updateSidebar(newProject.name, projElem, projElem.querySelector(".title"));
+    updateSidebar(project.name, projElem, projElem.querySelector(".title"), project);
   });
 }
 
-export { initializeProjects, projects, renderProject, createNewProject };
+export { initializeProjects, projects, renderProject, createNewProject, saveToLocalStorage };
 
 function createProject(projectName, projectGrid, projDiv) {
   const projContainer = document.createElement("div");
@@ -147,6 +179,7 @@ function createProject(projectName, projectGrid, projDiv) {
   const projectTitle = document.createElement("div");
   projectTitle.classList.add("title");
   projContainer.appendChild(projectTitle);
+saveToLocalStorage();
 
   const titleText = document.createElement("span");
   titleText.classList.add("project-name");
@@ -164,6 +197,8 @@ function createTask(text, des, due, note, priority) {
   let completed = false;
   const li = document.createElement("li");
   li.classList.add("li");
+const safePriority = priority.toLowerCase().replace(/\s+/g, "-"); 
+li.classList.add(`priority-${safePriority}`);
   const p = document.createElement("p");
   p.innerText = ` ${text}`;
   p.classList.add("para");
@@ -306,4 +341,35 @@ function createTask(text, des, due, note, priority) {
     element: li,
     toggle,
   };
+}
+
+ function saveToLocalStorage() {
+  localStorage.setItem("todoProjects", JSON.stringify(projects));
+}
+
+function loadFromLocalStorage() {
+  const stored = localStorage.getItem("todoProjects");
+  if (!stored) return;
+
+  const parsedProjects = JSON.parse(stored);
+
+  projects.length = 0;
+
+  parsedProjects.forEach((projData) => {
+    const newProj = createNewProject(projData.name);
+
+    projData.todos.forEach((todo) => {
+      const newTodo = createTodo(
+        todo.title,
+        todo.description,
+        todo.dueDate,
+        todo.notes,
+        todo.priority
+      );
+      if (todo.completed) newTodo.toggleComplete();
+      newProj.addTodo(newTodo);
+    });
+
+    projects.push(newProj);
+  });
 }

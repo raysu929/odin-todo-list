@@ -3,7 +3,7 @@ import {
   initializeProjects,
   projects,
   renderProject,
-  createNewProject,
+  createNewProject, saveToLocalStorage
 } from "./main.js";
 import "../styles/general.css";
 import "../styles/main.css";
@@ -63,6 +63,7 @@ submit.addEventListener("click", () => {
   
 const newProject = createNewProject(projectName);
 projects.push(newProject);
+saveToLocalStorage();
 
 const projElem = renderProject(newProject);
 projectGrid.appendChild(projElem);

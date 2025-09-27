@@ -1,10 +1,10 @@
-export function createTodo(title, description, dueDate, priority, notes = "") {
+export function createTodo(title, description, dueDate, notes = "", priority) {
   return {
     title,
     description,
     dueDate,
-    priority,
     notes,
+    priority,
     completed: false,
     toggleComplete() {
       this.completed = !this.completed;

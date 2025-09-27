@@ -1,3 +1,5 @@
+import { projects, saveToLocalStorage } from "./main";
+
 export const sidebar = document.createElement("div");
 sidebar.classList.add("sidebar");
 const headingProj = document.createElement("h1");
@@ -5,7 +7,7 @@ headingProj.innerText = "All Projects";
 headingProj.classList.add("headingProj");
 sidebar.appendChild(headingProj);
 
-export function updateSidebar(projectName, projectContainerElement, projectTitleElement, projectObj) {
+export function updateSidebar(projectName, projectContainerElement, projectTitleElement, projectObject) {
   const entry = document.createElement("div");
   entry.classList.add("sidebarEntry");
 
@@ -28,6 +30,11 @@ entry.appendChild(projPara);
     if (projectContainerElement && projectContainerElement.remove) {
       projectContainerElement.remove();
     }
+    const index = projects.findIndex((p) => p.name === projectObject.name);
+    if (index !== -1) {
+      projects.splice(index, 1);
+    }
+    saveToLocalStorage();
   });
   
   edit.addEventListener("click", () => {
@@ -68,9 +75,10 @@ if (titleTextNode) {
   titleTextNode.textContent = newName;
 }        
 }
-if (projectObj){
-  projectObj.name = newName;
-}
+const proj = projects.find((proj) => proj.name === projectName);
+if (proj)
+  proj.name = newName;
+saveToLocalStorage();
       }
       overlay.remove();
     });
