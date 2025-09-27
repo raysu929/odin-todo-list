@@ -40,7 +40,52 @@ grid-template-columns: 200px 40px 10px;
 }
 
 .edit{
+    position: relative;
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
+.sidebar-delete::after{
+    content: "Delete Project";  
+    position: absolute;
+  bottom: 88%;  
+  left: 88%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 12px;
+  
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease 1.0s;
+  z-index: 10;         
+}
+.edit::after {
+  content: "Edit Project Name";           
+  position: absolute;
+  bottom: 80%;  
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.8;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 12px;
+  
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease 1.0s;
+  pointer-events: none;       
+  z-index: 10;
+}
+
+.sidebar-delete:hover::after,
+.edit:hover::after {
+  opacity: 1;
+  visibility: visible;
 }
